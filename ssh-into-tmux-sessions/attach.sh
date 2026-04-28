@@ -1,33 +1,25 @@
 #!/usr/bin/env bash
 
-DESKTOP="desktop"
-PHONE="phone"
+AGENTS=(tmux_claude tmux_codex tmux_gemini)
 
-if ! tmux has-session -t "$DESKTOP" 2>/dev/null; then
-    tmux new-session -d -s "$DESKTOP" -n test
-fi
-
-if ! tmux has-session -t "$PHONE" 2>/dev/null; then
-    tmux new-session -d -s "$PHONE" -t "$DESKTOP"
-fi
-
-tmux set-option -t "$PHONE" remain-on-exit on
-trap 'tmux set-option -t "$PHONE" remain-on-exit off' EXIT
-
-selected=""
-for win in tmux_claude tmux_codex tmux_gemini; do
-    if tmux list-windows -t "$DESKTOP" -F '#{window_name}' | grep -qx "$win"; then
-        selected="$win"
-        break
-    fi
+running=()
+for s in "${AGENTS[@]}"; do
+    tmux has-session -t "$s" 2>/dev/null && running+=("$s")
 done
 
-if [ -z "$selected" ]; then
-    if ! tmux list-windows -t "$DESKTOP" -F '#{window_name}' | grep -qx "test"; then
-        tmux new-window -t "$DESKTOP:" -n test
+if [ ${#running[@]} -eq 0 ]; then
+    if ! tmux has-session -t test 2>/dev/null; then
+        tmux new-session -d -s test -n test
     fi
-    selected="test"
+    tmux set-option -t test remain-on-exit on
+    trap 'tmux set-option -t test remain-on-exit off 2>/dev/null' EXIT
+    tmux attach-session -t test
+    exit
 fi
 
-tmux select-window -t "$PHONE:$selected"
-tmux attach-session -t "$PHONE"
+for s in "${running[@]}"; do
+    tmux set-option -t "$s" remain-on-exit on
+done
+trap 'for s in "${running[@]}"; do tmux set-option -t "$s" remain-on-exit off 2>/dev/null; done' EXIT
+
+tmux attach-session -t "${running[0]}"
