@@ -22,5 +22,6 @@ if [ -z "$selected" ]; then
 fi
 
 tmux set-option -t "$SESSION" remain-on-exit on
+trap 'tmux set-option -t "$SESSION" remain-on-exit off' EXIT
 tmux select-window -t "$SESSION:$selected"
-exec tmux attach-session -t "$SESSION"
+tmux attach-session -t "$SESSION"
