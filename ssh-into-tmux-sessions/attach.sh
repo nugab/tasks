@@ -3,7 +3,7 @@
 SESSION="main"
 
 if ! tmux has-session -t "$SESSION" 2>/dev/null; then
-    tmux new-session -d -s "$SESSION" -n test
+    tmux new-session -d -s "$SESSION" -n tmux_claude
 fi
 
 named_exists=false
