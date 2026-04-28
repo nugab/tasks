@@ -21,5 +21,6 @@ if [ -z "$selected" ]; then
     selected="test"
 fi
 
+tmux set-option -t "$SESSION" remain-on-exit on
 tmux select-window -t "$SESSION:$selected"
 exec tmux attach-session -t "$SESSION"
