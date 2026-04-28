@@ -12,4 +12,5 @@ for win in run1 run2 run3; do
     fi
 done
 
+tmux select-window -t "$SESSION:run1"
 exec tmux attach-session -t "$SESSION"
