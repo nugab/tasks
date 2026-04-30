@@ -1,0 +1,11 @@
+{
+    "default_timeout_seconds": 1800,
+    "overrides": [
+        {
+            "days": ["mon", "wed", "fri"],
+            "start_time": "07:00",
+            "end_time": "17:00",
+            "timeout_seconds": 7200
+        }
+    ]
+}

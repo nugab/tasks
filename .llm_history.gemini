@@ -1,0 +1,19 @@
+Last updated on: 2026-04-29 12:00 UTC
+------------------------------------
+
+Project: tasks
+Current objective: Initializing session and orienting on project state.
+Why it matters: Ensure continuity and follow project conventions.
+Key decisions:
+- Following global bootstrap and self-learning rules.
+- Git root identified at /home/nathan/tasks/.
+- History files follow the .llm_history.* pattern at git root per 20_history.init, while per-task HISTORY.md files follow CLAUDE.md convention.
+Constraints and preferences:
+- Desktop tmux sessions: tmux_claude, tmux_codex, tmux_gemini.
+- Interactive Bash sources from ~/.source_me/ (narrow inspection only).
+Completed milestones:
+- ssh-into-tmux-sessions: attach.sh script created, tmux configuration finalized.
+- sleep-timer-schedule: Implemented scheduled GNOME sleep timeout using Python and Systemd User Timers. **DETAILED implementation history available in `sleep-timer-schedule/HISTORY.md`.**
+Blockers or unresolved issues: None.
+Next session should start with: Awaiting user instruction for next task.
+Conflicts with other file: None.
